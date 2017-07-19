@@ -15,6 +15,7 @@ from edx_oauth2_provider.constants import AUTHORIZED_CLIENTS_SESSION_KEY
 from edx_oauth2_provider.tests.factories import ClientFactory, TrustedClientFactory
 from mock import patch
 from pyquery import PyQuery as pq
+from opaque_keys import InvalidKeyError
 
 from student.cookies import get_user_info_cookie_data
 from student.helpers import DISABLE_UNENROLL_CERT_STATES
@@ -44,7 +45,7 @@ class TestStudentDashboardUnenrollments(SharedModuleStoreTestCase):
         """ Create a course and user, then log in. """
         super(TestStudentDashboardUnenrollments, self).setUp()
         self.user = UserFactory()
-        CourseEnrollmentFactory(course_id=self.course.id, user=self.user)
+        self.enrollment = CourseEnrollmentFactory(course_id=self.course.id, user=self.user)
         self.cert_status = None
         self.client.login(username=self.user.username, password=PASSWORD)
 
@@ -118,6 +119,29 @@ class TestStudentDashboardUnenrollments(SharedModuleStoreTestCase):
             response = self.client.get(reverse('dashboard'))
 
             self.assertEqual(response.status_code, 200)
+
+    def test_course_run_refund_status_successful(self):
+        """ Assert that the course refund status is 200 for successful refund call."""
+
+        with patch('student.models.CourseEnrollment.refundable', return_value=True):
+            response = self.client.get(reverse('course_run_refund_status', kwargs={'course_id': self.course.id}))
+
+        self.assertEqual(response.status_code, 200)
+
+        with patch('student.models.CourseEnrollment.refundable', return_value=False):
+            response = self.client.get(reverse('course_run_refund_status', kwargs={'course_id': self.course.id}))
+
+            self.assertEqual(response.status_code, 200)
+
+    def test_course_run_refund_status_invalid_course(self):
+        """ Assert that the course refund status is 500 for any Invalid Key ."""
+
+        with patch('opaque_keys.edx.keys.CourseKey.from_string') as mock_method:
+            mock_method.side_effect = InvalidKeyError('CourseKey', 'InvalidKeyError has occured while getting \
+                                                        refund status for a course.')
+            response = self.client.get(reverse('course_run_refund_status', kwargs={'course_id': self.course.id}))
+
+            self.assertEqual(response.status_code, 500)
 
 
 @unittest.skipUnless(settings.ROOT_URLCONF == 'lms.urls', 'Test only valid in lms')
