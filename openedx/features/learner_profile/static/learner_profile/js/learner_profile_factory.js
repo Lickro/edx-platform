@@ -131,7 +131,19 @@
                     options: options.language_options,
                     helpMessage: '',
                     persistChanges: true
+                }),
+
+                new FieldsView.DateFieldView({
+                    title: gettext('Joined'),
+                    titleVisible: true,
+                    model: accountSettingsModel,
+                    screenReaderTitle: gettext('Joined Date'),
+                    valueAttribute: 'date_joined',
+                    helpMessage: '',
+                    userLanguage: accountSettingsModel.get('language'),
+                    userTimezone: accountPreferencesModel.get('time_zone')
                 })
+
             ];
 
             sectionTwoFieldViews = [
