@@ -154,6 +154,9 @@
                      dialogMessageAttr = setDialogAttributes(isPaidCourse, certNameLong,
                                     courseNumber, courseName, enrollmentMode, showRefundOption);
 
+                     $('#track-info').empty();
+                     $('#refund-info').empty();
+
                      $('#track-info').html(interpolate(dialogMessageAttr['data-track-info'], {
                          courseNumber: ['<span id="unenroll_course_number">', courseNumber, '</span>'].join(''),
                          courseName: ['<span id="unenroll_course_name">', courseName, '</span>'].join(''),

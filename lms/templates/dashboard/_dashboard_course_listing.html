@@ -266,7 +266,7 @@ from util.course import get_link_for_about_page, get_encoded_course_sharing_utm_
       </div>
   </section>
   <footer class="wrapper-messages-primary">
-    <ul class="messages-list">
+    <div class="messages-list">
       % if related_programs:
       <div class="message message-related-programs is-shown">
         <span class="related-programs-preface" tabindex="0">${_('Related Programs')}:</span>
@@ -397,7 +397,7 @@ from util.course import get_link_for_about_page, get_encoded_course_sharing_utm_
         % if course_requirements:
         ## Multiple pre-requisite courses are not supported on frontend that's why we are pulling first element
         <% prc_target = reverse('about_course', args=[unicode(course_requirements['courses'][0]['key'])]) %>
-        <li class="prerequisites">
+        <div class="prerequisites">
           <p class="tip">
             ${Text(_("You must successfully complete {link_start}{prc_display}{link_end} before you begin this course.")).format(
                 link_start=HTML('<a href="{}">').format(prc_target),
@@ -405,9 +405,9 @@ from util.course import get_link_for_about_page, get_encoded_course_sharing_utm_
                 prc_display=course_requirements['courses'][0]['display'],
               )}
           </p>
-        </li>
+        </div>
         % endif
-    </ul>
+    </div>
   </footer>
 </article>
 </div>
