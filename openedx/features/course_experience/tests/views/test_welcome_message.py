@@ -27,6 +27,7 @@ def welcome_message_url(course):
         }
     )
 
+
 def latest_update_url(course):
     """
     Returns the URL for the latest update view.
@@ -49,6 +50,7 @@ def dismiss_message_url(course):
             'course_id': unicode(course.id),
         }
     )
+
 
 @ddt.ddt
 class TestWelcomeMessageView(ModuleStoreTestCase):

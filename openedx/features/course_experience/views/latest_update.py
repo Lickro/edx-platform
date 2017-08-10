@@ -9,6 +9,7 @@ from courseware.courses import get_course_with_access
 from openedx.core.djangoapps.plugin_api.views import EdxFragmentView
 from openedx.features.course_experience.views.course_updates import CourseUpdatesFragmentView
 
+
 class LatestUpdateFragmentView(EdxFragmentView):
     """
     A fragment that displays the latest course update.
@@ -31,7 +32,6 @@ class LatestUpdateFragmentView(EdxFragmentView):
         }
         html = render_to_string('course_experience/latest-update-fragment.html', context)
         return Fragment(html)
-
 
     @classmethod
     def latest_update_html(cls, request, course):
