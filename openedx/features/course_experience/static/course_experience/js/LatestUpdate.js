@@ -4,12 +4,12 @@ import 'jquery.cookie';
 export class LatestUpdate {  // eslint-disable-line import/prefer-default-export
 
   constructor(options) {
-    if ($.cookie('update-message') == 'hide') {
-      $('.update-message').hide();
+    if ($.cookie('update-message') === 'hide') {
+      $(options.messageContainer).hide();
     }
-    $('.dismiss-message button').click(() => {
-        $.cookie('update-message', 'hide', { expires: 1 });
-        $('.update-message').hide();
+    $(options.dismissButton).click(() => {
+      $.cookie('update-message', 'hide', { expires: 1 });
+      $(options.messageContainer).hide();
     });
   }
 }

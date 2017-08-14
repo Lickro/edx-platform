@@ -20,5 +20,5 @@ from openedx.core.djangolib.markup import HTML
 </%block>
 
 <%static:webpack entry="LatestUpdate">
-    new LatestUpdate();
+new LatestUpdate( { messageContainer: '.update-message',  dismissButton: '.dismiss-message button'});
 </%static:webpack>

@@ -16,9 +16,9 @@ class LatestUpdateFragmentView(EdxFragmentView):
     """
     def render_to_fragment(self, request, course_id=None, **kwargs):
         """
-        Renders the welcome message fragment for the specified course.
+        Renders the latest update message fragment for the specified course.
 
-        Returns: A fragment, or None if there is no welcome message.
+        Returns: A fragment, or None if there is no latest update message.
         """
         course_key = CourseKey.from_string(course_id)
         course = get_course_with_access(request.user, 'load', course_key, check_if_enrolled=True)
@@ -36,7 +36,7 @@ class LatestUpdateFragmentView(EdxFragmentView):
     @classmethod
     def latest_update_html(cls, request, course):
         """
-        Returns the course's welcome message or None if it doesn't have one.
+        Returns the course's latest update message or None if it doesn't have one.
         """
         # Return the course update with the most recent publish date
         ordered_updates = CourseUpdatesFragmentView.get_ordered_updates(request, course)

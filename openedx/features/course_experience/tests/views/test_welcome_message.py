@@ -92,10 +92,11 @@ class TestWelcomeMessageView(ModuleStoreTestCase):
         img_url = 'img.png'
         create_course_update(self.course, self.user, "<img src='/static/{url}'>".format(url=img_url))
         response = self.client.get(url_generator(self.course))
-        self.assertContains(response, "/asset-v1:{org}+{course}+{run}+type@asset+block/img.png".format(
+        self.assertContains(response, "/asset-v1:{org}+{course}+{run}+type@asset+block/{url}".format(
             org=self.course.id.org,
             course=self.course.id.course,
-            run=self.course.id.run
+            run=self.course.id.run,
+            url=img_url,
         ))
 
     @ddt.data(welcome_message_url, latest_update_url)
