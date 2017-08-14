@@ -141,6 +141,7 @@
             },
 
             imageChangeSucceeded: function() {
+                this.$('.u-field-upload-button').css('opacity', '');
                 this.render();
             },
 
