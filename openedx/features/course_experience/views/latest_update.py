@@ -7,7 +7,7 @@ from web_fragments.fragment import Fragment
 
 from courseware.courses import get_course_with_access
 from openedx.core.djangoapps.plugin_api.views import EdxFragmentView
-from openedx.features.course_experience.views.course_updates import CourseUpdatesFragmentView
+from openedx.features.course_experience.views.course_updates import get_ordered_updates
 
 
 class LatestUpdateFragmentView(EdxFragmentView):
@@ -39,7 +39,7 @@ class LatestUpdateFragmentView(EdxFragmentView):
         Returns the course's latest update message or None if it doesn't have one.
         """
         # Return the course update with the most recent publish date
-        ordered_updates = CourseUpdatesFragmentView.get_ordered_updates(request, course)
+        ordered_updates = get_ordered_updates(request, course)
         content = None
         if ordered_updates:
             content = ordered_updates[0]['content']
